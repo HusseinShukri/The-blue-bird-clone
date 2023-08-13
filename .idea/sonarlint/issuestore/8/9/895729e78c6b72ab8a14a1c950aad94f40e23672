@@ -1,0 +1,6 @@
+
+n	java:S116"MRename this field "Id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬µä›þÿÿÿÿ8ËÉ¨öž1
+r	java:S116"QRename this field "UserId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿Ìžçúÿÿÿÿ8ËÉ¨öž1
+y	java:S116"XRename this field "RetweetedFrom" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºµÅ²øÿÿÿÿ8ÌÉ¨öž1
+p	java:S116"TRename this field "CreatedAt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«¦÷°8ÌÉ¨öž1
+u	java:S116"TRename this field "IsDeleted" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯Ò¹ûùÿÿÿÿ8ÌÉ¨öž1

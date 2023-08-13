@@ -1,0 +1,12 @@
+{
+  "database": {
+    "mariadb": {
+      "jdbcUrl": "jdbc:mariadb://127.0.0.1:3306/bluebird",
+      "userName": "hussein",
+      "password": "root",
+      "schema": "bluebird",
+      "minimumPoolSize": 2,
+      "maximumPoolSize": 5
+    }
+  }
+}

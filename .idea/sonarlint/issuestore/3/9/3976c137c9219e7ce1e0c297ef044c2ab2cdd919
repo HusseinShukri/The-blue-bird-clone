@@ -1,0 +1,7 @@
+
+g	java:S116"MRename this field "Id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬µä›þÿÿÿÿ
+l	java:S116"PRename this field "Email" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(áï»‚8³Ž‚öž1
+o	java:S116"SRename this field "UserName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È”¸„8¥¯‚öž1
+t	java:S116"SRename this field "Password" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬›™Âûÿÿÿÿ8³¡ƒöž1
+p	java:S116"TRename this field "CreatedAt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«¦÷°8†Ô…öž1
+n	java:S116"TRename this field "IsDeleted" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯Ò¹ûùÿÿÿÿ

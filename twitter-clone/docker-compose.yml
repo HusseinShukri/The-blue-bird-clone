@@ -1,0 +1,18 @@
+version: '3.8'
+volumes:
+  mariadb_bluebird_data:
+    external: true
+services:
+  db:
+    image: mariadb
+    container_name: mariadb_bluebird_data
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bluebird
+      MYSQL_USER: hussein
+      MYSQL_PASSWORD: root
+    volumes:
+      - mariadb_bluebird_data:/var/lib/mysql:rw
+    ports:
+      - "3306:3306"
