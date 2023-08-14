@@ -1,10 +1,10 @@
 {
   "database": {
     "mariadb": {
-      "jdbcUrl": "jdbc:mariadb://127.0.0.1:3306/bluebird",
+      "jdbcUrl": "jdbc:mariadb://127.0.0.1:3307/twitter_clone",
       "userName": "hussein",
       "password": "root",
-      "schema": "bluebird",
+      "schema": "twitter_clone",
       "minimumPoolSize": 2,
       "maximumPoolSize": 5
     }

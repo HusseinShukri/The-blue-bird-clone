@@ -1,18 +1,23 @@
 version: '3.8'
+networks:
+  twitter_clone_network:
 volumes:
-  mariadb_bluebird_data:
+  mariadb_twitter_clone_data:
     external: true
 services:
   db:
-    image: mariadb
-    container_name: mariadb_bluebird_data
+    image: mariadb:10.6
+    container_name: mariadb_twitter_clone_data
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: bluebird
+      MYSQL_DATABASE: twitter_clone
       MYSQL_USER: hussein
       MYSQL_PASSWORD: root
     volumes:
-      - mariadb_bluebird_data:/var/lib/mysql:rw
+      - mariadb_twitter_clone_data:/var/lib/mysql:rw
     ports:
-      - "3306:3306"
+      - "3307:3306"
+    networks:
+      - twitter_clone_network
+
