@@ -42,7 +42,7 @@ public class HikariManager {
     }
 
     @Inject
-    public static  HikariManager getInstance(ConfigurationRecords.mariadbConfig config) {
+    public static synchronized HikariManager getInstance(ConfigurationRecords.mariadbConfig config) {
         if (instance == null) {
             instance = new HikariManager(config);
         }

@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 @Getter
@@ -20,19 +21,19 @@ public class ConfigurationManager {
     @Inject
     private ConfigurationManager() {
         try {
-            appConfig = new ObjectMapper().readValue(new File("/home/hussein/Documents/GitHub/Twitter-Clone/com.twitter.clone/src/main/resources/configurations.json"), AppConfig.class);
+            ClassLoader classLoader = getClass().getClassLoader();
+            File configFile = new File(classLoader.getResource("configurations.json").getFile());
+            try (FileInputStream fileInputStream = new FileInputStream(configFile)) {
+                appConfig = new ObjectMapper().readValue(fileInputStream, AppConfig.class);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Error reading configuration file", e);
         }
     }
 
-    public static ConfigurationManager getInstance() {
+    public static synchronized ConfigurationManager getInstance() {
         if (instance == null) {
-            synchronized (ConfigurationManager.class) {
-                if (instance == null) {
-                    instance = new ConfigurationManager();
-                }
-            }
+            instance = new ConfigurationManager();
         }
         return instance;
     }

@@ -3,6 +3,8 @@ package com.twitter.clone.module;
 import com.google.inject.AbstractModule;
 import com.twitter.clone.commen.infrastructure.configuration.ConfigurationManager;
 import com.twitter.clone.commen.infrastructure.configuration.HikariManager;
+import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.MigrationVersion;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.Slf4JSqlLogger;
 import org.jdbi.v3.core.statement.SqlStatements;
@@ -28,18 +30,18 @@ public class ConfigurationModule extends AbstractModule {
         bind(Jdbi.class).toInstance(jdbi);
 
 //        // TODO add flyway to the config files
-//        var flyway = Flyway.configure()
-//                .defaultSchema(appConfig.database().mariadb().schema())
-//                .locations("classpath:twitter-clone/resource/db/migration")
-//                .table("flyway_schema_history")
-//                .baselineOnMigrate(true)
-//                .baselineVersion("0")
-//                .validateMigrationNaming(true)
-//                .target(MigrationVersion.LATEST)
-//                .dataSource(dataSource)
-//                .load();
-//        bind(Flyway.class).toInstance(flyway);
-//        flyway.repair();
-//        flyway.migrate();
+        var flyway = Flyway.configure()
+                .defaultSchema(appConfig.database().mariadb().schema())
+                .locations("classpath:db/migration")
+                .table("flyway_schema_history")
+                .baselineOnMigrate(true)
+                .baselineVersion("0")
+                .validateMigrationNaming(true)
+                .target(MigrationVersion.LATEST)
+                .dataSource(dataSource)
+                .load();
+        bind(Flyway.class).toInstance(flyway);
+        flyway.repair();
+        flyway.migrate();
     }
 }
