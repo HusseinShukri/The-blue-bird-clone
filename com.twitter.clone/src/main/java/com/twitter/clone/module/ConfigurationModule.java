@@ -1,8 +1,8 @@
 package com.twitter.clone.module;
 
 import com.google.inject.AbstractModule;
-import com.twitter.clone.commen.Infrastructure.configuration.ConfigurationManager;
-import com.twitter.clone.commen.Infrastructure.configuration.HikariManager;
+import com.twitter.clone.commen.infrastructure.configuration.ConfigurationManager;
+import com.twitter.clone.commen.infrastructure.configuration.HikariManager;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.Slf4JSqlLogger;
 import org.jdbi.v3.core.statement.SqlStatements;
@@ -20,9 +20,10 @@ public class ConfigurationModule extends AbstractModule {
         var dataSource = HikariManager.getInstance(appConfig.database().mariadb()).getDataSource();
 
         var jdbi = Jdbi.create(dataSource);
-        jdbi.installPlugin(new SqlObjectPlugin());
-        jdbi.installPlugin(new Jackson2Plugin());
         jdbi.setSqlLogger(new Slf4JSqlLogger());
+        jdbi.installPlugin(new Jackson2Plugin());
+        jdbi.installPlugin(new SqlObjectPlugin());
+
         jdbi. getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
         bind(Jdbi.class).toInstance(jdbi);
 

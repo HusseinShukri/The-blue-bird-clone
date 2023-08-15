@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/twitter-clone/resource/static/css/index.css">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@1.5.3/dist/htmx.min.js"></script>
+
+<div class="tweet">
+    <p class="tweet-text">{{ tweet.text }}</p>
+    <button class="retweet-button" hx-post="/retweet/{{ tweet.id }}">Retweet</button>
+</div>
+
+</body>
+</html>

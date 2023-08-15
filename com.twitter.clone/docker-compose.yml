@@ -2,12 +2,12 @@ version: '3.8'
 networks:
   twitter_clone_network:
 volumes:
-  mariadb_twitter_clone_data:
+  mariadb_twitter_clone_volume:
     external: true
 services:
   db:
     image: mariadb:10.6
-    container_name: mariadb_twitter_clone_data
+    container_name: mariadb_twitter_clone_container
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -15,9 +15,9 @@ services:
       MYSQL_USER: hussein
       MYSQL_PASSWORD: root
     volumes:
-      - mariadb_twitter_clone_data:/var/lib/mysql:rw
+      - mariadb_twitter_clone_volume:/var/lib/mysql:rw
     ports:
-      - "3307:3306"
+      - "3306:3306"
     networks:
       - twitter_clone_network
 

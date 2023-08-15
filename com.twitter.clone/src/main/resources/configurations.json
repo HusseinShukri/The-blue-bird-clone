@@ -1,7 +1,7 @@
 {
   "database": {
     "mariadb": {
-      "jdbcUrl": "jdbc:mariadb://127.0.0.1:3307/twitter_clone",
+      "jdbcUrl": "jdbc:mariadb://127.0.0.1:3306/twitter_clone",
       "userName": "hussein",
       "password": "root",
       "schema": "twitter_clone",
