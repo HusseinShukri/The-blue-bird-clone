@@ -1,4 +1,4 @@
-package com.twitter.clone.infrastructure.models;
+package com.twitter.clone.infrastructure.model;
 
 public class ConfigurationRecords {
     public record AppConfig(DatabaseConfig Database) {}

@@ -1,8 +1,8 @@
 package com.twitter.clone.tweet.api.controller;
 
 import com.google.inject.Inject;
-import com.twitter.clone.infrastructure.annotations.route.RouteController;
-import com.twitter.clone.infrastructure.annotations.route.Http;
+import com.twitter.clone.infrastructure.annotation.route.RouteController;
+import com.twitter.clone.infrastructure.annotation.route.Http;
 import com.twitter.clone.tweet.domain.service.TweetService;
 import io.javalin.http.Context;
 import lombok.RequiredArgsConstructor;

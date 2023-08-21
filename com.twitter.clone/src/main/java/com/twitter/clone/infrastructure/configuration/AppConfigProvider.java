@@ -2,7 +2,7 @@ package com.twitter.clone.infrastructure.configuration;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.twitter.clone.infrastructure.models.ConfigurationRecords.AppConfig;
+import com.twitter.clone.infrastructure.model.ConfigurationRecords.AppConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 

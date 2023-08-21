@@ -1,7 +1,7 @@
 package com.twitter.clone.infrastructure.route;
 
-import com.twitter.clone.infrastructure.annotations.route.Http;
-import com.twitter.clone.infrastructure.annotations.route.RouteController;
+import com.twitter.clone.infrastructure.annotation.route.Http;
+import com.twitter.clone.infrastructure.annotation.route.RouteController;
 import io.javalin.apibuilder.ApiBuilder;
 import io.javalin.apibuilder.EndpointGroup;
 import org.reflections.Reflections;

@@ -2,7 +2,7 @@ package com.twitter.clone.infrastructure.configuration;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.twitter.clone.infrastructure.models.ConfigurationRecords;
+import com.twitter.clone.infrastructure.model.ConfigurationRecords;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;

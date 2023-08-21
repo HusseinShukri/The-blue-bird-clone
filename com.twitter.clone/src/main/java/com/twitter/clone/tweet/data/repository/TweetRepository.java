@@ -17,7 +17,6 @@ public class TweetRepository implements ITweetRepository {
 
     @Override
     public Tweet get(int id) {
-        System.out.println("Id : "+id);
         return tweetDao.getTweetById(id);
     }
 }

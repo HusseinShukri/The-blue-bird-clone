@@ -1,4 +1,4 @@
-package com.twitter.clone.infrastructure.annotations.route;
+package com.twitter.clone.infrastructure.annotation.route;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

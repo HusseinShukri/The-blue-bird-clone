@@ -5,7 +5,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.twitter.clone.infrastructure.configuration.AppConfigProvider;
 import com.twitter.clone.infrastructure.configuration.HikariDataSourceProvider;
-import com.twitter.clone.infrastructure.models.ConfigurationRecords;
+import com.twitter.clone.infrastructure.model.ConfigurationRecords;
 import com.twitter.clone.tweet.infrastructure.route.TweetRoute;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
