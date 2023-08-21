@@ -14,12 +14,11 @@ import java.io.IOException;
 @Getter
 @ThreadSafe
 @Singleton
-public class ConfigurationManager {
-    private static volatile ConfigurationManager instance;
+public class AppConfigProvider {
     private final AppConfig appConfig;
 
     @Inject
-    private ConfigurationManager() {
+    private AppConfigProvider() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
             File configFile = new File(classLoader.getResource("configurations.json").getFile());
@@ -29,12 +28,5 @@ public class ConfigurationManager {
         } catch (IOException e) {
             throw new RuntimeException("Error reading configuration file", e);
         }
-    }
-
-    public static synchronized ConfigurationManager getInstance() {
-        if (instance == null) {
-            instance = new ConfigurationManager();
-        }
-        return instance;
     }
 }

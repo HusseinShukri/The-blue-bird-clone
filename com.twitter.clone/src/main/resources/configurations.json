@@ -1,12 +1,13 @@
 {
-  "database": {
-    "mariadb": {
-      "jdbcUrl": "jdbc:mariadb://127.0.0.1:3306/twitter_clone",
-      "userName": "hussein",
-      "password": "root",
-      "schema": "twitter_clone",
-      "minimumPoolSize": 2,
-      "maximumPoolSize": 5
-    }
+  "Database": {
+    "Mariadb": {
+      "JdbcUrl": "jdbc:mariadb://127.0.0.1:3306/twitter_clone",
+      "UserName": "hussein",
+      "Password": "root",
+      "Schema": "twitter_clone",
+      "MinimumPoolSize": 2,
+      "MaximumPoolSize": 5,
+      "IdleTimeout": 30000,
+      "MaxLifetime": 1800000}
   }
 }

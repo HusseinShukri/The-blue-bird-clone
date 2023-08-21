@@ -1,8 +1,11 @@
 package com.twitter.clone.module;
 
 import com.google.inject.AbstractModule;
-import com.twitter.clone.commen.infrastructure.configuration.ConfigurationManager;
-import com.twitter.clone.commen.infrastructure.configuration.HikariManager;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import com.twitter.clone.commen.infrastructure.configuration.AppConfigProvider;
+import com.twitter.clone.commen.infrastructure.configuration.HikariDataSourceProvider;
+import com.twitter.clone.commen.infrastructure.models.ConfigurationRecords;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 import org.jdbi.v3.core.Jdbi;
@@ -15,23 +18,33 @@ public class ConfigurationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        var appConfig = ConfigurationManager.getInstance().getAppConfig();
-        bind(ConfigurationManager.class).toInstance(ConfigurationManager.getInstance());
-        bind(HikariManager.class).toInstance(HikariManager.getInstance(appConfig.database().mariadb()));
+        bind(AppConfigProvider.class).asEagerSingleton();
+        bind(HikariDataSourceProvider.class).asEagerSingleton();
+    }
 
-        var dataSource = HikariManager.getInstance(appConfig.database().mariadb()).getDataSource();
+    @Provides
+    public ConfigurationRecords.mariadbConfig provideMariadbConfig(AppConfigProvider configManager) {
+        return configManager.getAppConfig().Database().Mariadb();
+    }
 
+    @Provides
+    @Singleton
+    public Jdbi provideJdbi(HikariDataSourceProvider hikariDataSourceProvider) {
+        var dataSource = hikariDataSourceProvider.getDataSource();
         var jdbi = Jdbi.create(dataSource);
         jdbi.setSqlLogger(new Slf4JSqlLogger());
         jdbi.installPlugin(new Jackson2Plugin());
         jdbi.installPlugin(new SqlObjectPlugin());
+        jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
+        return jdbi;
+    }
 
-        jdbi. getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
-        bind(Jdbi.class).toInstance(jdbi);
-
-//        // TODO add flyway to the config files
+    @Provides
+    @Singleton
+    public Flyway provideFlyway(AppConfigProvider configManager, HikariDataSourceProvider hikariDataSourceProvider) {
+        var dataSource = hikariDataSourceProvider.getDataSource();
         var flyway = Flyway.configure()
-                .defaultSchema(appConfig.database().mariadb().schema())
+                .defaultSchema(configManager.getAppConfig().Database().Mariadb().Schema())
                 .locations("classpath:db/migration")
                 .table("flyway_schema_history")
                 .baselineOnMigrate(true)
@@ -40,8 +53,8 @@ public class ConfigurationModule extends AbstractModule {
                 .target(MigrationVersion.LATEST)
                 .dataSource(dataSource)
                 .load();
-        bind(Flyway.class).toInstance(flyway);
         flyway.repair();
         flyway.migrate();
+        return flyway;
     }
 }
