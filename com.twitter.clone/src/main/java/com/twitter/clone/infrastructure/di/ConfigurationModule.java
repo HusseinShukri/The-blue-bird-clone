@@ -1,11 +1,12 @@
-package com.twitter.clone.module;
+package com.twitter.clone.infrastructure.di;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.twitter.clone.commen.infrastructure.configuration.AppConfigProvider;
-import com.twitter.clone.commen.infrastructure.configuration.HikariDataSourceProvider;
-import com.twitter.clone.commen.infrastructure.models.ConfigurationRecords;
+import com.twitter.clone.infrastructure.configuration.AppConfigProvider;
+import com.twitter.clone.infrastructure.configuration.HikariDataSourceProvider;
+import com.twitter.clone.infrastructure.models.ConfigurationRecords;
+import com.twitter.clone.tweet.infrastructure.route.TweetRoute;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 import org.jdbi.v3.core.Jdbi;
@@ -13,6 +14,7 @@ import org.jdbi.v3.core.statement.Slf4JSqlLogger;
 import org.jdbi.v3.core.statement.SqlStatements;
 import org.jdbi.v3.jackson2.Jackson2Plugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import org.modelmapper.ModelMapper;
 
 public class ConfigurationModule extends AbstractModule {
 
@@ -20,6 +22,8 @@ public class ConfigurationModule extends AbstractModule {
     protected void configure() {
         bind(AppConfigProvider.class).asEagerSingleton();
         bind(HikariDataSourceProvider.class).asEagerSingleton();
+        bind(ModelMapper.class).asEagerSingleton();
+        bind(TweetRoute.class);
     }
 
     @Provides
