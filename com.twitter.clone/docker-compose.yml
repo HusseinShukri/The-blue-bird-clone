@@ -1,9 +1,14 @@
 version: '3.8'
+
 networks:
   twitter_clone_network:
+
 volumes:
   mariadb_twitter_clone_volume:
     external: true
+  rabbitmq_data:
+  rabbitmq_logs:
+
 services:
   db:
     image: mariadb:10.6
@@ -21,3 +26,14 @@ services:
     networks:
       - twitter_clone_network
 
+  rabbitmq:
+    image: "rabbitmq:management"
+    container_name: rabbitmq_twitter_clone_container
+    ports:
+      - "15672:15672" # Management UI
+      - "5672:5672"   # RabbitMQ server
+    networks:
+      - twitter_clone_network
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia
+      - rabbitmq_logs:/var/log/rabbitmq
