@@ -12,19 +12,21 @@ import java.util.Set;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
-public abstract class BaseRoutes implements EndpointGroup {
-    public static final String BASE_PACKAGE = "com.twitter.clone";
+public abstract class BaseRoute implements EndpointGroup {
+    public static final String BASE_PACKAGE = "com.twitter.clone.";
     public static final String BASE_PATH = "/twitter-clone";
     public static final String PATH_SEPARATE = "/";
     protected final Map<Class<?>, Object> controllerInstancesMap = new HashMap<>();
 
     protected abstract void initializeControllerInstances();
 
+    protected abstract String getModuleName();
+
     @Override
     public void addEndpoints() {
         initializeControllerInstances();
 
-        Reflections reflections = new Reflections(BASE_PACKAGE);
+        Reflections reflections = new Reflections(BASE_PACKAGE+getModuleName());
         Set<Class<?>> controllerClasses = reflections.getTypesAnnotatedWith(RouteController.class);
 
         for (Class<?> controllerClass : controllerClasses) {
@@ -39,7 +41,7 @@ public abstract class BaseRoutes implements EndpointGroup {
         }
     }
 
-    private static void registerControllerRoutes(Class<?> controllerClass, String controllerPath, Map<Class<?>, Object> controllerInstancesMap) {
+    protected void registerControllerRoutes(Class<?> controllerClass, String controllerPath, Map<Class<?>, Object> controllerInstancesMap) {
         Object controllerInstance = controllerInstancesMap.get(controllerClass);
 
         if (controllerInstance == null) {
@@ -52,12 +54,18 @@ public abstract class BaseRoutes implements EndpointGroup {
                     registerGet(method, controllerInstance);
                 } else if (method.isAnnotationPresent(Http.Post.class)) {
                     registerPost(method, controllerInstance);
+                }else if (method.isAnnotationPresent(Http.Put.class)) {
+                    registerPut(method, controllerInstance);
+                }else if (method.isAnnotationPresent(Http.Patch.class)) {
+                    registerPatch(method, controllerInstance);
+                }else if (method.isAnnotationPresent(Http.Delete.class)) {
+                    registerDelete(method, controllerInstance);
                 }
             }
         });
     }
 
-    private static void registerGet(Method method, Object controllerInstance) {
+    protected void registerGet(Method method, Object controllerInstance) {
         Http.Get get = method.getAnnotation(Http.Get.class);
         ApiBuilder.get(get.value(), ctx -> {
             try {
@@ -68,9 +76,42 @@ public abstract class BaseRoutes implements EndpointGroup {
         });
     }
 
-    private static void registerPost(Method method, Object controllerInstance) {
+    protected void registerPost(Method method, Object controllerInstance) {
         Http.Post post = method.getAnnotation(Http.Post.class);
         ApiBuilder.post(post.value(), ctx -> {
+            try {
+                method.invoke(controllerInstance, ctx);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    protected void registerPut(Method method, Object controllerInstance) {
+        Http.Put put = method.getAnnotation(Http.Put.class);
+        ApiBuilder.put(put.value(), ctx -> {
+            try {
+                method.invoke(controllerInstance, ctx);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    protected void registerPatch(Method method, Object controllerInstance) {
+        Http.Patch patch = method.getAnnotation(Http.Patch.class);
+        ApiBuilder.patch(patch.value(), ctx -> {
+            try {
+                method.invoke(controllerInstance, ctx);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    protected void registerDelete(Method method, Object controllerInstance) {
+        Http.Delete delete = method.getAnnotation(Http.Delete.class);
+        ApiBuilder.delete(delete.value(), ctx -> {
             try {
                 method.invoke(controllerInstance, ctx);
             } catch (Exception e) {
