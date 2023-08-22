@@ -1,9 +1,9 @@
 package com.twitter.clone.infrastructure.model;
 
 public class ConfigurationRecords {
-    public record AppConfig(DatabaseConfig Database) {}
-    public record DatabaseConfig(mariadbConfig Mariadb) {}
-    public record mariadbConfig(
+    public record AppConfig(DatabaseConfig Database,Security Security) {}
+    public record DatabaseConfig(MariadbConfig Mariadb) {}
+    public record MariadbConfig(
             String JdbcUrl,
             String UserName,
             String Password,
@@ -12,5 +12,8 @@ public class ConfigurationRecords {
             int MaximumPoolSize,
             int IdleTimeout,
             int MaxLifetime) {}
+
+    public record Security(JwtConfig Jwt){}
+    public record JwtConfig(String SecretKey, Long ExpirationTime){}
 }
 

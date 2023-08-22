@@ -27,7 +27,12 @@ public class ConfigurationModule extends AbstractModule {
     }
 
     @Provides
-    public ConfigurationRecords.mariadbConfig provideMariadbConfig(AppConfigProvider configManager) {
+    public ConfigurationRecords.JwtConfig provideJwtConfig(AppConfigProvider configManager) {
+        return configManager.getAppConfig().Security().Jwt();
+    }
+
+    @Provides
+    public ConfigurationRecords.MariadbConfig provideMariadbConfig(AppConfigProvider configManager) {
         return configManager.getAppConfig().Database().Mariadb();
     }
 

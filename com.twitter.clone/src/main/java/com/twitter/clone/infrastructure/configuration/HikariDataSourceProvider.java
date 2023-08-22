@@ -18,12 +18,12 @@ public class HikariDataSourceProvider {
     private final DataSource dataSource;
 
     @Inject
-    private HikariDataSourceProvider(ConfigurationRecords.mariadbConfig config) {
+    private HikariDataSourceProvider(ConfigurationRecords.MariadbConfig config) {
         dataSource = new HikariDataSource(getHikariConfig(config));
     }
 
     @NotNull
-    private static HikariConfig getHikariConfig(ConfigurationRecords.mariadbConfig config) {
+    private static HikariConfig getHikariConfig(ConfigurationRecords.MariadbConfig config) {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(config.JdbcUrl());
         hikariConfig.setUsername(config.UserName());

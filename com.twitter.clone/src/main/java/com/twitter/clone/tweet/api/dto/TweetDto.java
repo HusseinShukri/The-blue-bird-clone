@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class TweetDto {
-    private int id;
-    private int userId;
+    private Integer id;
+    private Integer userId;
     private String content;
     private LocalDateTime createdAt;
     private boolean isDeleted;

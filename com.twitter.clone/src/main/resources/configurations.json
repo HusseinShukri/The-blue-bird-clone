@@ -9,5 +9,11 @@
       "MaximumPoolSize": 5,
       "IdleTimeout": 30000,
       "MaxLifetime": 1800000}
+  },
+  "Security": {
+    "Jwt": {
+      "SecretKey": "0BE7DDF64756B503FFDAE7AD15165D4F1C9737A9119002FBE05E6F4AF3A59FD4",
+      "ExpirationTime": 864000000
+    }
   }
 }
