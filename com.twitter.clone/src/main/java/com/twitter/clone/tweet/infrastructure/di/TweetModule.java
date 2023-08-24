@@ -7,7 +7,7 @@ import com.twitter.clone.tweet.api.mapper.TweetMapper;
 import com.twitter.clone.tweet.api.services.ITweetService;
 import com.twitter.clone.tweet.domain.repository.ITweetRepository;
 import com.twitter.clone.tweet.domain.service.TweetService;
-import com.twitter.clone.tweet.data.dao.ITweetDao;
+import com.twitter.clone.tweet.data.dao.ITweetDAO;
 import com.twitter.clone.tweet.data.repository.TweetRepository;
 import com.twitter.clone.tweet.api.controller.TweetController;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class TweetModule extends AbstractModule {
     }
 
     @Provides
-    public ITweetDao provideTweetDao(Jdbi jdbi) {
-        return jdbi.onDemand(ITweetDao.class);
+    public ITweetDAO provideTweetDao(Jdbi jdbi) {
+        return jdbi.onDemand(ITweetDAO.class);
     }
 }

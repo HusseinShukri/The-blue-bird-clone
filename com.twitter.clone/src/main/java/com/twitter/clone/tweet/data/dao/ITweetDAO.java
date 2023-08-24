@@ -5,7 +5,7 @@ import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 
-public interface ITweetDao {
+public interface ITweetDAO {
 
     @SqlQuery("""
         SELECT

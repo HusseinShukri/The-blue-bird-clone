@@ -11,11 +11,13 @@ public class TweetMapper {
 
     private final ModelMapper mapper;
 
-    public TweetDto tweetToTweetDto(Tweet tweet){
-        return mapper.map(tweet, TweetDto.class);
+    public TweetDto tweetToTweetDto(Tweet source) {
+        if (source == null) return null;
+        return mapper.map(source, TweetDto.class);
     }
 
-    public Tweet tweetDtoToTweet(TweetDto tweetDto){
-        return mapper.map(tweetDto,Tweet.class);
+    public Tweet tweetDtoToTweet(TweetDto source) {
+        if (source == null) return null;
+        return mapper.map(source, Tweet.class);
     }
 }

@@ -5,6 +5,7 @@ import com.twitter.clone.infrastructure.annotation.route.RouteController;
 import com.twitter.clone.infrastructure.annotation.route.Http;
 import com.twitter.clone.tweet.domain.service.TweetService;
 import io.javalin.http.Context;
+import io.javalin.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 
 @RouteController("tweet")
@@ -18,7 +19,7 @@ public class TweetController {
         var id = Integer.parseInt(ctx.pathParam("id"));
         var projectDto = tweetService.get(id);
         if (projectDto == null) {
-            ctx.status(404);
+            ctx.status(HttpStatus.NOT_FOUND);
         } else {
             ctx.json(projectDto);
         }
