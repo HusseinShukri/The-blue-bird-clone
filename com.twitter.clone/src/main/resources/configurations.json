@@ -1,4 +1,7 @@
 {
+  "App": {
+    "Port": 7070
+  },
   "Database": {
     "Mariadb": {
       "JdbcUrl": "jdbc:mariadb://127.0.0.1:3306/twitter_clone",
