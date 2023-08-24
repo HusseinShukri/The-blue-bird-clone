@@ -11,7 +11,6 @@ import org.reflections.Reflections;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
@@ -28,12 +27,11 @@ public abstract class BaseRoute implements EndpointGroup {
         initializeControllerInstances();
 
         Reflections reflections = new Reflections(BASE_PACKAGE + getPackagePath());
-        Set<Class<?>> controllerClasses = reflections.getTypesAnnotatedWith(RouteController.class);
 
-        for (Class<?> controllerClass : controllerClasses) {
-            RouteController controllerAnnotation = controllerClass.getAnnotation(RouteController.class);
-            String controllerPath = getControllerPath(controllerAnnotation);
-            registerControllerRoutes(controllerClass, controllerPath, controllerInstancesMap);
+        for (Class<?> controllerClass : reflections.getTypesAnnotatedWith(RouteController.class)) {
+            registerControllerRoutes(controllerClass,
+                    getControllerPath(controllerClass.getAnnotation(RouteController.class)),
+                    controllerInstancesMap);
         }
     }
 
@@ -52,7 +50,7 @@ public abstract class BaseRoute implements EndpointGroup {
         return packagePath.value();
     }
 
-    protected void registerControllerRoutes(Class<?> controllerClass, String controllerPath, Map<Class<?>, Object> controllerInstancesMap) {
+    private void registerControllerRoutes(Class<?> controllerClass, String controllerPath, Map<Class<?>, Object> controllerInstancesMap) {
         Object controllerInstance = controllerInstancesMap.get(controllerClass);
         if (controllerInstance == null) {
             throw new RuntimeException("No instance found for controller: " + controllerClass.getName());
