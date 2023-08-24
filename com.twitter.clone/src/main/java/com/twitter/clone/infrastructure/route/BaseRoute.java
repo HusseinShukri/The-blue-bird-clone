@@ -15,9 +15,9 @@ import java.util.Map;
 import static io.javalin.apibuilder.ApiBuilder.path;
 
 public abstract class BaseRoute implements EndpointGroup {
-    public static final String BASE_PACKAGE = "com.twitter.clone.";
-    public static final String BASE_PATH = "/twitter-clone";
-    public static final String PATH_SEPARATE = "/";
+    private static final String BASE_PACKAGE = "com.twitter.clone.";
+    private static final String BASE_PATH = "/twitter-clone";
+    private static final String PATH_SEPARATE = "/";
     protected final Map<Class<?>, Object> controllerInstancesMap = new HashMap<>();
 
     protected abstract void initializeControllerInstances();
@@ -37,8 +37,7 @@ public abstract class BaseRoute implements EndpointGroup {
 
     @NotNull
     private static String getControllerPath(RouteController controllerAnnotation) {
-        String controllerPath = BASE_PATH + PATH_SEPARATE + controllerAnnotation.value();
-        return controllerPath;
+        return BASE_PATH + PATH_SEPARATE + controllerAnnotation.value();
     }
 
     @NotNull
