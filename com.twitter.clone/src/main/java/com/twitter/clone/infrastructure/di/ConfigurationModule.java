@@ -1,12 +1,13 @@
 package com.twitter.clone.infrastructure.di;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.twitter.clone.infrastructure.configuration.AppConfigProvider;
-import com.twitter.clone.infrastructure.configuration.HikariDataSourceProvider;
 import com.twitter.clone.infrastructure.model.ConfigurationRecords;
 import com.twitter.clone.tweet.infrastructure.route.TweetRoute;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 import org.jdbi.v3.core.Jdbi;
@@ -16,30 +17,37 @@ import org.jdbi.v3.jackson2.Jackson2Plugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.modelmapper.ModelMapper;
 
+import javax.sql.DataSource;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public class ConfigurationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(AppConfigProvider.class).asEagerSingleton();
-        bind(HikariDataSourceProvider.class).asEagerSingleton();
         bind(ModelMapper.class).asEagerSingleton();
         bind(TweetRoute.class);
     }
 
     @Provides
-    public ConfigurationRecords.JwtConfig provideJwtConfig(AppConfigProvider configManager) {
-        return configManager.getAppConfig().Security().Jwt();
+    public ConfigurationRecords.App provideApp(ConfigurationRecords.AppConfig configManager) {
+        return configManager.App();
     }
 
     @Provides
-    public ConfigurationRecords.MariadbConfig provideMariadbConfig(AppConfigProvider configManager) {
-        return configManager.getAppConfig().Database().Mariadb();
+    public ConfigurationRecords.JwtConfig provideJwtConfig(ConfigurationRecords.AppConfig configManager) {
+        return configManager.Security().Jwt();
+    }
+
+    @Provides
+    public ConfigurationRecords.MariadbConfig provideMariadbConfig(ConfigurationRecords.AppConfig configManager) {
+        return configManager.Database().Mariadb();
     }
 
     @Provides
     @Singleton
-    public Jdbi provideJdbi(HikariDataSourceProvider hikariDataSourceProvider) {
-        var dataSource = hikariDataSourceProvider.getDataSource();
+    public Jdbi provideJdbi(DataSource dataSource) {
         var jdbi = Jdbi.create(dataSource);
         jdbi.setSqlLogger(new Slf4JSqlLogger());
         jdbi.installPlugin(new Jackson2Plugin());
@@ -50,10 +58,9 @@ public class ConfigurationModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public Flyway provideFlyway(AppConfigProvider configManager, HikariDataSourceProvider hikariDataSourceProvider) {
-        var dataSource = hikariDataSourceProvider.getDataSource();
+    public Flyway provideFlyway(ConfigurationRecords.AppConfig configManager, DataSource dataSource) {
         var flyway = Flyway.configure()
-                .defaultSchema(configManager.getAppConfig().Database().Mariadb().Schema())
+                .defaultSchema(configManager.Database().Mariadb().Schema())
                 .locations("classpath:db/migration")
                 .table("flyway_schema_history")
                 .baselineOnMigrate(true)
@@ -65,5 +72,41 @@ public class ConfigurationModule extends AbstractModule {
         flyway.repair();
         flyway.migrate();
         return flyway;
+    }
+
+    @Provides
+    @Singleton
+    public DataSource providerHikariDataSource(ConfigurationRecords.MariadbConfig config){
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl(config.JdbcUrl());
+        hikariConfig.setUsername(config.UserName());
+        hikariConfig.setPassword(config.Password());
+        hikariConfig.setSchema(config.Schema());
+        hikariConfig.setAutoCommit(true);
+        hikariConfig.setMinimumIdle(config.MinimumPoolSize());
+        hikariConfig.setMaximumPoolSize(config.MaximumPoolSize());
+        hikariConfig.setIdleTimeout(config.IdleTimeout());
+        hikariConfig.setMaxLifetime(config.MaxLifetime());
+        hikariConfig.addDataSourceProperty("useBulkStmts", false);
+        hikariConfig.addDataSourceProperty("characterEncoding", "utf8mb4");
+        hikariConfig.addDataSourceProperty("connectionCollation", "utf8mb4_general_ci");
+        return new HikariDataSource(hikariConfig);
+    }
+
+    @Provides
+    @Singleton
+    public ConfigurationRecords.AppConfig providerAppConfig(){
+        ConfigurationRecords.AppConfig appConfig;
+        try {
+            ClassLoader classLoader = getClass().getClassLoader();
+            File configFile = new File(classLoader.getResource("configurations.json").getFile());
+            try (FileInputStream fileInputStream = new FileInputStream(configFile)) {
+                appConfig = new ObjectMapper().readValue(fileInputStream, ConfigurationRecords.AppConfig.class);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading configuration file", e);
+        }
+
+        return appConfig;
     }
 }
