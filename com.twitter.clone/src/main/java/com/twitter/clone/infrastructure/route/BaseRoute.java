@@ -5,6 +5,7 @@ import com.twitter.clone.infrastructure.annotation.route.PackagePath;
 import com.twitter.clone.infrastructure.annotation.route.RouteController;
 import io.javalin.apibuilder.ApiBuilder;
 import io.javalin.apibuilder.EndpointGroup;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
+@Slf4j
 public abstract class BaseRoute implements EndpointGroup {
     private static final String BASE_PACKAGE = "com.twitter.clone.";
     private static final String BASE_PATH = "/twitter-clone";
@@ -35,13 +37,11 @@ public abstract class BaseRoute implements EndpointGroup {
         }
     }
 
-    @NotNull
-    private static String getControllerPath(RouteController controllerAnnotation) {
+    private @NotNull static String getControllerPath(RouteController controllerAnnotation) {
         return BASE_PATH + PATH_SEPARATE + controllerAnnotation.value();
     }
 
-    @NotNull
-    private String getPackagePath() {
+    private @NotNull String getPackagePath() throws RuntimeException {
         PackagePath packagePath = this.getClass().getAnnotation(PackagePath.class);
         if (packagePath == null) {
             throw new RuntimeException("Classes extending BaseRoute must be annotated with @BasePackageConfig");
@@ -70,7 +70,8 @@ public abstract class BaseRoute implements EndpointGroup {
                         registerDelete(method, controllerInstance);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
+                   throw e;
                 }
             }
         });
