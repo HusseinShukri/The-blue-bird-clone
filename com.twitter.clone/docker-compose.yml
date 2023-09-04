@@ -10,6 +10,17 @@ volumes:
   rabbitmq_logs:
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app_twitter_clone_container
+    ports:
+      - 7070:7070
+    depends_on:
+      - db
+      - rabbitmq
+
   db:
     image: mariadb:10.6
     container_name: mariadb_twitter_clone_container
