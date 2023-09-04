@@ -1,0 +1,42 @@
+<div class="col-md-6 d-flex flex-column justify-content-center align-items-center" xmlns="http://www.w3.org/1999/html">
+    <h1 class="text-center">LOGIN</h1>
+    <style>
+        .max-width-login-form {
+            max-width: 15rem;
+            width: 100%;
+        }
+
+        .min-width-login-button {
+            width: 10rem;
+        }
+
+        .login-fields {
+            margin-bottom: 1.5rem;
+        }
+
+        .login-result {
+            color: #c53b3b;
+        }
+    </style>
+    <form class="mt-4 max-width-login-form flex-column align-items-center justify-content-center"
+          hx-post="/twitter-clone/authentication/login"
+          hx-target="#login-result"
+          hx-swap-oob="true"
+          hx-trigger="submit">
+        <div class="login-fields">
+            <div class="mb-3 d-flex flex-column align-items-center">
+                <label for="email" class="form-label text-center">Email</label>
+                <input type="text" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="mb-3 d-flex flex-column align-items-center">
+                <label for="password" class="form-label text-center">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center max-width-form">
+            <div id="login-result" style="color: #c53b3b; margin-bottom: 1.5rem">
+            </div>
+            <button type="Submit" id="submit" class="btn btn-primary min-width-login-button">Login</button>
+        </div>
+    </form>
+</div>

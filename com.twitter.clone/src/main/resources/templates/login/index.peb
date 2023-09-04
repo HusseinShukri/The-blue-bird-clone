@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/webjars/htmx.org/1.9.5/dist/htmx.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <title>Login : Twitter Clone</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center align-items-center vh-100">
+        <div class="col-md-6 d-flex justify-content-center align-items-center">
+            <img src="/imag/twitter-logo.svg" alt="Twitter Logo" class="img-fluid" width="200" height="200">
+        </div>
+        <div class="col-md-6">
+            <div class="options " >
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item " role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                type="button" role="tab" aria-controls="home" aria-selected="true">login
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                type="button" role="tab" aria-controls="profile" aria-selected="false">Signup
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content justify-content-center align-items-center " id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        {% include "templates/login/login.peb" %}
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        {% include "templates/login/signup.peb" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
