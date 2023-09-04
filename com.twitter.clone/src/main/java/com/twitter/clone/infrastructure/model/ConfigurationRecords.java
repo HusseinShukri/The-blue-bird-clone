@@ -13,7 +13,8 @@ public class ConfigurationRecords {
             int MaximumPoolSize,
             int IdleTimeout,
             int MaxLifetime) {}
-    public record Security(JwtConfig Jwt){}
+    public record Security(CookieConfig Cookie, JwtConfig Jwt){}
     public record JwtConfig(String SecretKey, Long ExpirationTime){}
+    public record CookieConfig(String CookieName,String Path, int MaxAge, boolean HttpOnly ){}
 }
 
