@@ -8,6 +8,7 @@ import com.twitter.clone.authentication.domain.exception.UserAlreadyExistExcepti
 import com.twitter.clone.authentication.infrastructure.route.AuthenticationRoute;
 import com.twitter.clone.infrastructure.app.middleware.JwtMiddleware;
 import com.twitter.clone.infrastructure.model.ConfigurationRecords;
+import com.twitter.clone.newsfeed.api.model.Post;
 import com.twitter.clone.newsfeed.infrastructure.route.NewsfeedRoute;
 import com.twitter.clone.tweet.infrastructure.route.TweetRoute;
 import io.javalin.Javalin;
@@ -27,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
@@ -128,14 +129,35 @@ public class TwitterCloneApp {
             ctx.result(message);
         });
 
-        javalinApp.exception(UserAlreadyExistException.class, (ex,ctx)->{
+        javalinApp.exception(UserAlreadyExistException.class, (ex, ctx) -> {
             ctx.status(HttpStatus.BAD_REQUEST);
             ctx.json(ex.getMessage());
         });
     }
 
     private void routeConfiguration() {
-        javalinApp.get("/", ctx -> {ctx.render("templates/login/index.peb");});
+        Post post1 = new Post();
+        post1.setText("Hello from the other");
+        post1.setName("Hussein");
+
+        Post post2 = new Post();
+        post2.setText("I must've called a thousand times\n");
+        post2.setName("Musab");
+
+        Post post3 = new Post();
+        post3.setText("To tell you I'm sorry for everything that I've done\n");
+        post3.setName("Qusay");
+
+        List<Post> posts  = new ArrayList<>();
+        posts.add(post1);
+        posts.add(post2);
+        posts.add(post3);
+        Map<String, Object> model = new HashMap<>();
+        model.put("posts", posts);
+
+        javalinApp.get("/", ctx -> {
+            ctx.render("templates/newsfeed/index.html", model);
+        });
         javalinApp.routes(tweetRoute);
         javalinApp.routes(authenticationRoute);
         javalinApp.routes(newsfeedRoute);
@@ -145,8 +167,7 @@ public class TwitterCloneApp {
         javalinApp.before(jwtMiddleware);
     }
 
-    private void pebbleConfiguration()
-    {
+    private void pebbleConfiguration() {
         JavalinRenderer.register(new JavalinPebble(), ".html", ".peb", ".pebble");
     }
 }
