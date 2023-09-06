@@ -1,0 +1,40 @@
+.h-fit-content {
+    height: fit-content;
+}
+
+.left-side-hyper-element:hover {
+    background-color: rgb(15, 10, 25, 0.1);
+}
+
+.sidenav-a {
+    color: #0F1419;
+    text-decoration: none;
+}
+
+.sidenav-a:hover, .sidenav-a:focus {
+    color: #0F1419;
+    text-decoration: none;
+}
+
+.fn-bold-20 {
+    font-family: Chirp, "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.fn-20 {
+    font-family: Chirp, "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.fn-bold-15 {
+    font-family: Chirp, "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.fn-15 {
+    font-family: Chirp, "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+    font-size: 15px;
+}

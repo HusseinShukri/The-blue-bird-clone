@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Post {
+public class Tweet {
     private String image;
     private String name;
     private String text;

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/newsfeed-layout.css">
+    <link rel="stylesheet" href="/css/tweet-timeline.css">
+
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <style>
+        * {
+            /*outline: 1px solid blue;*/
+        }
+    </style>
+    <title>Newsfeed : Twitter Clone</title>
+</head>
+<body>
+<div class="main-container container-md container-fluid">
+    <div class="row ">
+        <div class="fn-bold-20 col-3 position-sticky sticky-top h-fit-content ps-3">
+            {% include "templates/main/component/sidenav.html" %}
+        </div>
+        <div class=" middle-side col-lg-6 col-9 ali">
+            <div class="fn-bold-20">
+                HOME
+            </div>
+            <div id="middle-side-tweet-timeline">
+                {% include "templates/main/component/tweet-timeline.html"%}
+            </div>
+        </div>
+        <div class="right-side ps-3 col-lg-3  position-sticky sticky-top h-fit-content  d-none d-lg-block">
+        </div>
+    </div>
+</div>
+</body>
+</html>
