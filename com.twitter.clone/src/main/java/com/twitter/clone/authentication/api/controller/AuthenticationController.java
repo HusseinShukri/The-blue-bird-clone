@@ -43,7 +43,7 @@ public class AuthenticationController {
             return;
         }
 
-        UserClaim userClaim = new UserClaim(user.getId(), user.getUsername(), UserLevel.USER.toString());
+        UserClaim userClaim = new UserClaim(user.getId().toString(), user.getUsername(), UserLevel.USER.toString());
         context.cookie(cookieService.CreteJwtCookie(JWTProvider.generateToken(userClaim)));
         context.status(HttpStatus.PERMANENT_REDIRECT);
         context.header("hx-redirect", "/twitter-clone/newsfeed/index");
@@ -64,5 +64,4 @@ public class AuthenticationController {
         }
         context.status(HttpStatus.OK).result("signup successful");
     }
-
 }
