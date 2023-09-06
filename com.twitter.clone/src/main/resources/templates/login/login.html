@@ -1,25 +1,6 @@
-<div class="col-md-6 d-flex flex-column justify-content-center align-items-center" xmlns="http://www.w3.org/1999/html">
+<div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
     <h1 class="text-center">LOGIN</h1>
-    <style>
-        .max-width-login-form {
-            max-width: 15rem;
-            width: 100%;
-        }
-
-        .min-width-login-button {
-            width: 10rem;
-        }
-
-        .login-fields {
-            margin-bottom: 1.5rem;
-        }
-
-        .login-result {
-            color: #c53b3b;
-        }
-    </style>
-    <form
-          class="mt-4 max-width-login-form flex-column align-items-center justify-content-center"
+    <form class="mt-4 max-width-login-form flex-column align-items-center justify-content-center"
           hx-post="/twitter-clone/authentication/login"
           hx-target="#login-result"
           hx-swap-oob="true"
