@@ -91,9 +91,7 @@ public class TwitterCloneApp {
                         executionTimeMs
                 );
             });
-
-            config.staticFiles.enableWebjars();
-
+            
             config.staticFiles.add(staticFiles -> {
                 staticFiles.hostedPath = "/";
                 staticFiles.directory = "/static";

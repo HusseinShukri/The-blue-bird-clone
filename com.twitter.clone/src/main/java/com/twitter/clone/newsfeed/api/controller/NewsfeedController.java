@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 
 @RouteController("newsfeed")
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
@@ -32,30 +34,13 @@ public class NewsfeedController {
         post3.setText("To tell you I'm sorry for everything that I've done");
         post3.setName("Qusay");
 
-        tweets.add(post1);
-        tweets.add(post2);
-        tweets.add(post3);
-        tweets.add(post1);
-        tweets.add(post2);
-        tweets.add(post3);
-        tweets.add(post1);
-        tweets.add(post2);
-        tweets.add(post3);
-        tweets.add(post1);
-        tweets.add(post2);
-        tweets.add(post3);
-        tweets.add(post1);
-        tweets.add(post2);
-        tweets.add(post3);
-        tweets.add(post1);
-        tweets.add(post2);
-        tweets.add(post3);
-        tweets.add(post1);
-        tweets.add(post2);
-        tweets.add(post3);
-        tweets.add(post1);
-        tweets.add(post2);
-        tweets.add(post3);
+        Random random = new Random();
+        int randomNumber = random.nextInt(5,20);
+        for (int i = 0; i < randomNumber; i++) {
+            tweets.add(post1);
+            tweets.add(post2);
+            tweets.add(post3);
+        }
         model.put("tweets",tweets);
     }
 
@@ -73,6 +58,7 @@ public class NewsfeedController {
     @Http.Get("tweet-timeline/my-user")
     public void newsfeedMyUser(Context context) {
         var userId = context.attribute("UserId");
+
         context.render("templates/main/component/tweet-timeline.html", model);
     }
 }
