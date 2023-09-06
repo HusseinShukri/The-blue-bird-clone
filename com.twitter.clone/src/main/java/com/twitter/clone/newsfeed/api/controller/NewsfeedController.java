@@ -3,12 +3,12 @@ package com.twitter.clone.newsfeed.api.controller;
 import com.google.inject.Inject;
 import com.twitter.clone.infrastructure.annotation.route.Http;
 import com.twitter.clone.infrastructure.annotation.route.RouteController;
-import com.twitter.clone.newsfeed.api.model.Post;
+import com.twitter.clone.newsfeed.api.model.Tweet;
 import io.javalin.http.Context;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,17 +16,63 @@ import java.util.Map;
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
 public class NewsfeedController {
 
-    @Http.Get("index")
-    public void index(Context context){
+    private Map<String, Object> model = new HashMap<>();
 
-        Post post1 = new Post();
+    private void loadTweets() {
+        List<Tweet> tweets = new LinkedList<Tweet>();
+        Tweet post1 = new Tweet();
         post1.setText("Hello from the other");
         post1.setName("Hussein");
 
-        List<Post> posts  = new ArrayList<>();
-        posts.add(post1);
-        Map<String, Object> model = new HashMap<>();
-        model.put("posts", posts);
-        context.render("templates/newsfeed/index.html",model);
+        Tweet post2 = new Tweet();
+        post2.setText("I must've called a thousand times");
+        post2.setName("Musab");
+
+        Tweet post3 = new Tweet();
+        post3.setText("To tell you I'm sorry for everything that I've done");
+        post3.setName("Qusay");
+
+        tweets.add(post1);
+        tweets.add(post2);
+        tweets.add(post3);
+        tweets.add(post1);
+        tweets.add(post2);
+        tweets.add(post3);
+        tweets.add(post1);
+        tweets.add(post2);
+        tweets.add(post3);
+        tweets.add(post1);
+        tweets.add(post2);
+        tweets.add(post3);
+        tweets.add(post1);
+        tweets.add(post2);
+        tweets.add(post3);
+        tweets.add(post1);
+        tweets.add(post2);
+        tweets.add(post3);
+        tweets.add(post1);
+        tweets.add(post2);
+        tweets.add(post3);
+        tweets.add(post1);
+        tweets.add(post2);
+        tweets.add(post3);
+        model.put("tweets",tweets);
+    }
+
+    @Http.Get("index")
+    public void index(Context context) {
+        loadTweets();
+        context.render("templates/main/index.html", model);
+    }
+
+    @Http.Get("tweet-timeline")
+    public void newsfeed(Context context) {
+        loadTweets();
+        context.render("templates/main/component/tweet-timeline.html", model);
+    }
+    @Http.Get("tweet-timeline/my-user")
+    public void newsfeedMyUser(Context context) {
+        var userId = context.attribute("UserId");
+        context.render("templates/main/component/tweet-timeline.html", model);
     }
 }
