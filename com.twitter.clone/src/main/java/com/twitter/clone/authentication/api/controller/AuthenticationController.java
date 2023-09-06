@@ -24,7 +24,7 @@ public class AuthenticationController {
 
     @Http.Get("login")
     public void loginPage(Context context) {
-        context.render("templates/login/index.peb");
+        context.render("templates/login/index.html");
     }
 
     @Http.Post("login")
