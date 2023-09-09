@@ -1,6 +1,7 @@
 package com.twitter.clone.tweet.data.repository;
 
 import com.google.inject.Inject;
+import com.twitter.clone.tweet.data.Dto.TweetDto;
 import com.twitter.clone.tweet.domain.entity.Tweet;
 import com.twitter.clone.tweet.domain.repository.ITweetRepository;
 import com.twitter.clone.tweet.data.dao.ITweetDAO;
@@ -24,7 +25,7 @@ public class TweetRepository implements ITweetRepository {
     }
 
     @Override
-    public List<Tweet> getTweets(int userId) {
+    public List<TweetDto> getTweets(int userId) {
         var tweets = tweetDao.getTweetsByUserId(userId);
         return tweets;
     }

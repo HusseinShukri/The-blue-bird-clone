@@ -26,15 +26,15 @@ public class NewsfeedController {
         List<TweetDto> tweets = new LinkedList<TweetDto>();
         TweetDto post1 = new TweetDto();
         post1.setContent("Hello from the other");
-        post1.setName("Hussein");
+        post1.setUsername("Hussein");
 
         TweetDto post2 = new TweetDto();
         post2.setContent("I must've called a thousand times");
-        post2.setName("Musab");
+        post2.setUsername("Musab");
 
         TweetDto post3 = new TweetDto();
         post3.setContent("To tell you I'm sorry for everything that I've done");
-        post3.setName("Qusay");
+        post3.setUsername("Qusay");
 
         Random random = new Random();
         int randomNumber = random.nextInt(5, 20);
@@ -48,7 +48,7 @@ public class NewsfeedController {
 
     @Http.Get("index")
     public void index(Context context) {
-        
+
         context.render("templates/main/index.html", model);
     }
 

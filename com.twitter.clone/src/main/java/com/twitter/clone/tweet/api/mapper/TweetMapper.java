@@ -49,4 +49,14 @@ public class TweetMapper {
                 .map(tweet -> mapper.map(tweet, TweetDto.class))
                 .collect(Collectors.toList());
     }
+
+    public List<TweetDto>  domainTweetDtoToTweetDtoList(List<com.twitter.clone.tweet.data.Dto.TweetDto> tweets) {
+        if (tweets == null || tweets.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return tweets
+                .stream()
+                .map(tweet -> mapper.map(tweet, TweetDto.class))
+                .collect(Collectors.toList());
+    }
 }

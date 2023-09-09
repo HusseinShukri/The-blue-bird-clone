@@ -1,9 +1,10 @@
-package com.twitter.clone.tweet.api.dto;
+package com.twitter.clone.tweet.data.Dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 public class TweetDto {
