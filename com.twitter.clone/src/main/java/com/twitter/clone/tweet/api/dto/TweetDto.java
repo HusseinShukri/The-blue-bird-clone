@@ -9,7 +9,9 @@ import java.time.LocalDateTime;
 public class TweetDto {
     private Integer id;
     private Integer userId;
+    private String name;
     private String content;
+    private String image;
     private LocalDateTime createdAt;
     private boolean isDeleted;
 }

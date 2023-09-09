@@ -6,6 +6,8 @@ import com.twitter.clone.tweet.domain.repository.ITweetRepository;
 import com.twitter.clone.tweet.data.dao.ITweetDAO;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
 public class TweetRepository implements ITweetRepository {
     private final ITweetDAO tweetDao;
@@ -18,5 +20,11 @@ public class TweetRepository implements ITweetRepository {
     @Override
     public Tweet get(int id) {
         return tweetDao.getTweetById(id);
+    }
+
+    @Override
+    public List<Tweet> getTweets(int userId) {
+        var tweets = tweetDao.getTweetsByUserId(userId);
+        return tweets;
     }
 }

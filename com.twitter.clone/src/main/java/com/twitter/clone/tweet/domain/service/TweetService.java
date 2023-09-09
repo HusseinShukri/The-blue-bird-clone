@@ -7,6 +7,8 @@ import com.twitter.clone.tweet.api.services.ITweetService;
 import com.twitter.clone.tweet.domain.repository.ITweetRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
 public class TweetService implements ITweetService {
 
@@ -22,5 +24,11 @@ public class TweetService implements ITweetService {
     public TweetDto get(int id) {
         var tweet = tweetRepository.get(id);
         return mapper.tweetToTweetDto(tweet);
+    }
+
+    @Override
+    public List<TweetDto> getTweets(int userId) {
+        var tweets = tweetRepository.getTweets(userId);
+        return mapper.tweetsToTweetDtoList(tweets);
     }
 }
