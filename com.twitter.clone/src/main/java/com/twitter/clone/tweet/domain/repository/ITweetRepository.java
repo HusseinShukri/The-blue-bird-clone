@@ -12,4 +12,6 @@ public interface ITweetRepository {
     Tweet get(int id);
 
     List<TweetDto> getTweets(int userId);
+
+    List<TweetDto> fetchFeedTweets();
 }

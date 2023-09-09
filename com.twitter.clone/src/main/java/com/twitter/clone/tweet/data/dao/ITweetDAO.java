@@ -46,7 +46,25 @@ public interface ITweetDAO {
                     User as u on u.id = t.user_id
                 WHERE
                     t.user_id = :userId
+                ORDER BY t.created_at DESC;
             """)
     @RegisterBeanMapper(TweetDto.class)
     List<TweetDto> getTweetsByUserId(@Bind("userId") int userId);
+
+    @SqlQuery("""
+                SELECT
+                    t.id,
+                    t.user_id,
+                    t.content,
+                    t.created_at,
+                    t.is_deleted,
+                    u.username
+                FROM
+                    Tweet as t
+                JOIN 
+                    User as u on u.id = t.user_id
+                ORDER BY t.created_at DESC;
+            """)
+    @RegisterBeanMapper(TweetDto.class)
+    List<TweetDto> fetchFeedTweets();
 }

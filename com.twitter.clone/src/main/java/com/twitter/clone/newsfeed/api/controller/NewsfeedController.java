@@ -48,14 +48,14 @@ public class NewsfeedController {
 
     @Http.Get("index")
     public void index(Context context) {
-
+        loadTweets();
         context.render("templates/main/index.html", model);
     }
 
     @Http.Get("tweet-timeline")
     public void newsfeed(Context context) {
-        loadTweets();
-        context.render("templates/main/component/tweet-timeline.html", model);
+        var tweets = tweetService.fetchFeedTweets();
+        context.render("templates/main/component/tweet-timeline.html", Map.of("tweets", tweets));
     }
 
     @Http.Get("tweet-timeline/profile")

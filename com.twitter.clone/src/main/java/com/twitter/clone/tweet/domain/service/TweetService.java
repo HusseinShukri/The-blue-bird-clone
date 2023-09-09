@@ -34,4 +34,10 @@ public class TweetService implements ITweetService {
         var tweets = tweetRepository.getTweets(userId);
         return mapper.domainTweetDtoToTweetDtoList(tweets);
     }
+
+    @Override
+    public List<TweetDto> fetchFeedTweets() {
+        var tweets = tweetRepository.fetchFeedTweets();
+        return mapper.domainTweetDtoToTweetDtoList(tweets);
+    }
 }

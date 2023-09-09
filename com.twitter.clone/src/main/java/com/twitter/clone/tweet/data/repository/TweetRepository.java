@@ -26,7 +26,11 @@ public class TweetRepository implements ITweetRepository {
 
     @Override
     public List<TweetDto> getTweets(int userId) {
-        var tweets = tweetDao.getTweetsByUserId(userId);
-        return tweets;
+        return tweetDao.getTweetsByUserId(userId);
+    }
+
+    @Override
+    public List<TweetDto> fetchFeedTweets() {
+        return tweetDao.fetchFeedTweets();
     }
 }
