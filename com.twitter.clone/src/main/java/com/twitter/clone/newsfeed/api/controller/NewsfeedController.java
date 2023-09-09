@@ -48,7 +48,7 @@ public class NewsfeedController {
 
     @Http.Get("index")
     public void index(Context context) {
-        loadTweets();
+        
         context.render("templates/main/index.html", model);
     }
 

@@ -1,6 +1,7 @@
 package com.twitter.clone.tweet.domain.service;
 
 import com.google.inject.Inject;
+import com.twitter.clone.tweet.api.dto.NewTweetDto;
 import com.twitter.clone.tweet.api.dto.TweetDto;
 import com.twitter.clone.tweet.api.mapper.TweetMapper;
 import com.twitter.clone.tweet.api.services.ITweetService;
@@ -16,8 +17,10 @@ public class TweetService implements ITweetService {
     private final ITweetRepository tweetRepository;
 
     @Override
-    public int insert(TweetDto tweet) {
-        return 0;
+    public void insert(NewTweetDto newTweet) {
+        //TODO try add a feedback on the tweet insert
+        var tweet = mapper.newTweetDtoToTweet(newTweet);
+        tweetRepository.insert(tweet);
     }
 
     @Override

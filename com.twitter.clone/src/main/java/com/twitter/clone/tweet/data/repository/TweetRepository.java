@@ -14,6 +14,7 @@ public class TweetRepository implements ITweetRepository {
 
     @Override
     public int insert(Tweet tweet) {
+        tweetDao.insert(tweet.getUserId(),tweet.getContent());
         return 0;
     }
 

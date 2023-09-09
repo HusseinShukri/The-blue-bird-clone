@@ -11,6 +11,10 @@
         textarea.style.height = "auto";
         textarea.style.height = (textarea.scrollHeight) + "px";
     };
+
+    function printHello() {
+        alert("Hello there !@")
+    }
 </script>
 <style>
     .post-content-element-textarea {
@@ -19,7 +23,8 @@
         resize: vertical;
         overflow: hidden;
     }
-    .charactersCount{
+
+    .charactersCount {
         color: rgb(0, 0, 0, 0.5);
     }
 </style>
@@ -27,28 +32,32 @@
     <div class="post-image-content">
         <div class="post-image border image">{{ user.image }}</div>
         <div class="post-content-element">
-            <div class=" post-content-element post-content-text fn-15 ">
-                <textarea id="post-content-element-textarea" class="post-content-element-textarea"
-                          placeholder="What is happening?!" rows="3" maxlength="500"
-                          oninput="updateCharacterCount(); resizeTextarea();"></textarea>
-                <div class="fn-bold-15">
-                    <span id="charactersLeft" class="charactersCount">500</span></div>
-            </div>
-            <div class=" post-content-element post-content-name fn-bold-15 mb-3">
-                <div class="new-post-content-options container p-2">
-                    <div class="row">
-                        <div class="new-post-content-options-left col-auto d-flex">
-                        </div>
-                        <div class="new-post-content-options-right col-auto ms-auto d-flex ">
-                            <button class="new-post-content-options-right-post fn-bold-20"
-                                    hx-post="/server-endpoint"
-                                    hx-trigger="click"
-                                    hx-swap="outerHTML">POST
-                            </button>
+            <form action="/twitter-clone/tweet/new-tweet" method="POST">
+                <div class="post-content-element post-content-text fn-15">
+                    <textarea id="post-content-element-textarea" name="tweetContent" class="post-content-element-textarea"
+                              placeholder="What is happening?!" rows="3" maxlength="500"
+                              oninput="updateCharacterCount(); resizeTextarea();"></textarea>
+                    <div class="fn-bold-15">
+                        <span id="charactersLeft" class="charactersCount">500</span>
+                    </div>
+                </div>
+                <div class="post-content-element post-content-name fn-bold-15 mb-3">
+                    <div class="new-post-content-options container p-2">
+                        <div class="row">
+                            <div class="new-post-content-options-left col-auto d-flex">
+                            </div>
+                            <div class="new-post-content-options-right col-auto ms-auto d-flex">
+                                <button type="submit" class="new-post-content-options-right-post fn-bold-20"
+                                        hx-trigger="click"
+                                        hx-target="#middle-side-tweet-timeline"
+                                        hx-swap="innerHTML"
+                                        hx-post="/twitter-clone/tweet/new-tweet">POST
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
