@@ -12,7 +12,7 @@ public class CookieService implements ICookieService {
     private final ConfigurationRecords.CookieConfig cookieConfig;
 
     @Override
-    public Cookie CreteJwtCookie(String jwtToken)
+    public Cookie CreateJwtCookie(String jwtToken)
     {
         Cookie cookie = new Cookie(cookieConfig.CookieName(), jwtToken);
         cookie.setMaxAge(cookieConfig.MaxAge());

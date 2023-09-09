@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.twitter.clone.authentication.api.mapper.AuthenticationMapper;
 import com.twitter.clone.authentication.api.servcie.ICookieService;
 import com.twitter.clone.authentication.api.servcie.IUserService;
+import com.twitter.clone.authentication.domain.exception.InvalidCredentialException;
 import com.twitter.clone.authentication.domain.exception.UserAlreadyExistException;
 import com.twitter.clone.infrastructure.annotation.route.Http;
 import com.twitter.clone.infrastructure.annotation.route.RouteController;
@@ -28,40 +29,31 @@ public class AuthenticationController {
     }
 
     @Http.Post("login")
-    public void login(Context context) {
+    public void login(Context context) throws InvalidCredentialException {
         var loginDto = authenticationMapper.contextToLoginDto(context);
         if (loginDto == null) {
             context.status(HttpStatus.BAD_REQUEST);
             return;
         }
 
-        // TODO we should refactor this and replace it with exception not handle it manually
-        // this will require a global handler
         var user = userService.validateLogin(loginDto);
-        if (user == null) {
-            context.status(HttpStatus.BAD_REQUEST).result("Invalid email or password");
-            return;
-        }
 
         UserClaim userClaim = new UserClaim(user.getId().toString(), user.getUsername(), UserLevel.USER.toString());
-        context.cookie(cookieService.CreteJwtCookie(JWTProvider.generateToken(userClaim)));
-        context.status(HttpStatus.PERMANENT_REDIRECT);
+        context.cookie(cookieService.CreateJwtCookie(JWTProvider.generateToken(userClaim)));
+        context.status(HttpStatus.SEE_OTHER);
         context.header("hx-redirect", "/twitter-clone/newsfeed/index");
     }
 
     @Http.Post("signup")
-    public void signup(Context context) {
+    public void signup(Context context) throws UserAlreadyExistException {
         var signupDto = authenticationMapper.contextToSignupDto(context);
         if (signupDto == null) {
             context.status(HttpStatus.BAD_REQUEST);
             return;
         }
-        try {
-            var user = userService.createNewUser(signupDto);
-        } catch (UserAlreadyExistException e) {
-            context.status(HttpStatus.BAD_REQUEST).result(e.getMessage());
-            return;
-        }
-        context.status(HttpStatus.OK).result("signup successful");
+
+        var user = userService.createNewUser(signupDto);
+
+        context.status(HttpStatus.CREATED).result("signup successful");
     }
 }

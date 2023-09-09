@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.inject.Inject;
+import com.twitter.clone.authentication.domain.exception.InvalidCredentialException;
 import com.twitter.clone.authentication.domain.exception.UserAlreadyExistException;
 import com.twitter.clone.authentication.infrastructure.route.AuthenticationRoute;
 import com.twitter.clone.infrastructure.app.middleware.JwtMiddleware;
@@ -91,7 +92,7 @@ public class TwitterCloneApp {
                         executionTimeMs
                 );
             });
-            
+
             config.staticFiles.add(staticFiles -> {
                 staticFiles.hostedPath = "/";
                 staticFiles.directory = "/static";
@@ -106,35 +107,34 @@ public class TwitterCloneApp {
 
     private void exceptionConfiguration() {
         javalinApp.exception(IllegalArgumentException.class, (ex, ctx) -> {
-            ctx.status(HttpStatus.BAD_REQUEST);
-            ctx.result(ex.getMessage());
+            ctx.status(HttpStatus.BAD_REQUEST).result(ex.getMessage());
         });
 
         javalinApp.exception(IllegalStateException.class, (ex, ctx) -> {
-            ctx.status(HttpStatus.UNPROCESSABLE_CONTENT);
-            ctx.json(ex.getMessage());
+            ctx.status(HttpStatus.UNPROCESSABLE_CONTENT).result(ex.getMessage());
         });
 
         javalinApp.exception(NoSuchElementException.class, (ex, ctx) -> {
-            ctx.status(HttpStatus.NOT_FOUND);
-            ctx.json(ex.getMessage());
+            ctx.status(HttpStatus.NOT_FOUND).result(ex.getMessage());
         });
 
         javalinApp.exception(Exception.class, (ex, ctx) -> {
             String message = String.format("Error Processing Request : %s : %s : %s", ctx.url(), ex.getClass().getName(), ex.getMessage());
             log.error(message);
-            ctx.status(HttpStatus.SERVICE_UNAVAILABLE);
-            ctx.result(message);
+            ctx.status(HttpStatus.SERVICE_UNAVAILABLE).result(message);
         });
 
         javalinApp.exception(UserAlreadyExistException.class, (ex, ctx) -> {
-            ctx.status(HttpStatus.BAD_REQUEST);
-            ctx.json(ex.getMessage());
+            ctx.status(HttpStatus.CONFLICT).result(ex.getMessage());
         });
 
         javalinApp.exception(UnauthorizedException.class, (ex, ctx) -> {
             ctx.status(HttpStatus.UNAUTHORIZED).result(ex.getMessage());
             ctx.redirect("/twitter-clone/authentication/login");
+        });
+
+        javalinApp.exception(InvalidCredentialException.class, (ex, ctx) -> {
+            ctx.status(HttpStatus.UNAUTHORIZED).result(ex.getMessage());
         });
     }
 
