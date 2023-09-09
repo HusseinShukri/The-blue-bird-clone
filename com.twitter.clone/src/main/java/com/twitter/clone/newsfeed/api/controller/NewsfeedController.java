@@ -5,13 +5,12 @@ import com.twitter.clone.authentication.api.servcie.IUserService;
 import com.twitter.clone.infrastructure.annotation.route.Http;
 import com.twitter.clone.infrastructure.annotation.route.RouteController;
 import com.twitter.clone.infrastructure.commen.exceptions.UnauthorizedException;
-import com.twitter.clone.tweet.api.dto.TweetDto;
 import com.twitter.clone.tweet.api.services.ITweetService;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 
-import java.util.*;
+import java.util.Map;
 
 @RouteController("newsfeed")
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
@@ -20,36 +19,10 @@ public class NewsfeedController {
     private final IUserService userService;
     private final ITweetService tweetService;
 
-    private Map<String, Object> model = new HashMap<>();
-
-    private void loadTweets() {
-        List<TweetDto> tweets = new LinkedList<TweetDto>();
-        TweetDto post1 = new TweetDto();
-        post1.setContent("Hello from the other");
-        post1.setUsername("Hussein");
-
-        TweetDto post2 = new TweetDto();
-        post2.setContent("I must've called a thousand times");
-        post2.setUsername("Musab");
-
-        TweetDto post3 = new TweetDto();
-        post3.setContent("To tell you I'm sorry for everything that I've done");
-        post3.setUsername("Qusay");
-
-        Random random = new Random();
-        int randomNumber = random.nextInt(5, 20);
-        for (int i = 0; i < randomNumber; i++) {
-            tweets.add(post1);
-            tweets.add(post2);
-            tweets.add(post3);
-        }
-        model.put("tweets", tweets);
-    }
-
     @Http.Get("index")
     public void index(Context context) {
-        loadTweets();
-        context.render("templates/main/index.html", model);
+        var tweets = tweetService.fetchFeedTweets();
+        context.render("templates/main/index.html", Map.of("tweets", tweets));
     }
 
     @Http.Get("tweet-timeline")
