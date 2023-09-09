@@ -5,8 +5,10 @@ import com.twitter.clone.authentication.api.dto.AuthenticationDto;
 import com.twitter.clone.authentication.api.dto.UserDto;
 import com.twitter.clone.authentication.api.mapper.UserMapper;
 import com.twitter.clone.authentication.api.servcie.IUserService;
+import com.twitter.clone.authentication.domain.exception.InvalidCredentialException;
 import com.twitter.clone.authentication.domain.exception.UserAlreadyExistException;
 import com.twitter.clone.authentication.domain.repository.IUserRepository;
+import com.twitter.clone.authentication.domain.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
@@ -16,8 +18,12 @@ public class UserService implements IUserService {
     private final UserMapper mapper;
 
     @Override
-    public UserDto validateLogin(AuthenticationDto.LoginDto loginDto) {
+    public UserDto validateLogin(AuthenticationDto.LoginDto loginDto) throws InvalidCredentialException {
         var user = userRepository.findUserLogin(loginDto.email(), loginDto.password());
+        if(user == null)
+        {
+            throw new InvalidCredentialException();
+        }
         return mapper.userToUserDto(user);
     }
 
@@ -29,6 +35,16 @@ public class UserService implements IUserService {
         }
         userRepository.createNewUser(signupDto.email(), signupDto.UserName(), signupDto.password());
         var newuser = userRepository.findUser(signupDto.email(), signupDto.UserName());
+        return mapper.userToUserDto(user);
+    }
+
+    @Override
+    public UserDto findUser(int userId) {
+        var user = userRepository.findUser(userId);
+        if(user == null)
+        {
+            throw new UserNotFoundException();
+        }
         return mapper.userToUserDto(user);
     }
 }

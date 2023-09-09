@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UserClaim {
-    private String Id;
+    private String id;
     private String name;
     private String level;
 }

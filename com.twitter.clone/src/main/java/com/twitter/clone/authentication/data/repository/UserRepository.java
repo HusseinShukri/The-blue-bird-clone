@@ -12,6 +12,11 @@ public class UserRepository implements IUserRepository {
     private final IUserDAO userDau;
 
     @Override
+    public User findUser(int userId) {
+        return userDau.findUser(userId);
+    }
+
+    @Override
     public User findUserLogin(String email, String password) {
         return userDau.findUserLogin(email, password);
     }

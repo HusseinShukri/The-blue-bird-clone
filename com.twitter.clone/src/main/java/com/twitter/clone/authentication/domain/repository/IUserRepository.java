@@ -4,6 +4,8 @@ import com.twitter.clone.authentication.domain.entity.User;
 
 public interface IUserRepository {
 
+    User findUser(int userId);
+
     User findUserLogin(String email, String password);
 
     User findUser(String email, String userName);

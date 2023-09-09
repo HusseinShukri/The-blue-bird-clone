@@ -9,6 +9,22 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 public interface IUserDAO {
 
     @SqlQuery("""
+            SELECT
+                u.id,
+                u.username,
+                u.email,
+                u.password,
+                u.created_at as 'createdAt',
+                u.is_deleted as 'isDeleted'
+            FROM
+                User as u
+            WHERE
+                u.id = :userId
+                    """)
+    @RegisterBeanMapper(User.class)
+    User findUser(@Bind("userId") int userId);
+
+    @SqlQuery("""
         SELECT
             u.id,
             u.username,
