@@ -148,7 +148,7 @@ public class TwitterCloneApp {
     }
 
     private void middlewareConfiguration() {
-        javalinApp.before(jwtMiddleware);
+//        javalinApp.before(jwtMiddleware);
     }
 
     private void pebbleConfiguration() {
