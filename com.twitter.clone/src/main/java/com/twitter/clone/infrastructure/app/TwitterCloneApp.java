@@ -25,6 +25,7 @@ import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.flywaydb.core.Flyway;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +41,7 @@ public class TwitterCloneApp {
     private final TweetRoute tweetRoute;
     private final AuthenticationRoute authenticationRoute;
     private final NewsfeedRoute newsfeedRoute;
+    private final Flyway flyway;
     private static Javalin javalinApp;
 
     public void start() {
@@ -53,6 +55,12 @@ public class TwitterCloneApp {
         routeConfiguration();
         middlewareConfiguration();
         pebbleConfiguration();
+        FlywayConfiguration();
+    }
+
+    private void FlywayConfiguration() {
+        flyway.repair();
+        flyway.migrate();
     }
 
     private void javalinTypesConfiguration() {

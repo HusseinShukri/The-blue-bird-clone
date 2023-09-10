@@ -87,7 +87,7 @@ public class ConfigurationModule extends AbstractModule {
     @Provides
     @Singleton
     public Flyway provideFlyway(ConfigurationRecords.AppConfig configManager, DataSource dataSource) {
-        var flyway = Flyway.configure()
+        return Flyway.configure()
                 .defaultSchema(configManager.Database().Mariadb().Schema())
                 .locations("classpath:db/migration")
                 .table("flyway_schema_history")
@@ -97,9 +97,6 @@ public class ConfigurationModule extends AbstractModule {
                 .target(MigrationVersion.LATEST)
                 .dataSource(dataSource)
                 .load();
-        flyway.repair();
-        flyway.migrate();
-        return flyway;
     }
 
     @Provides
