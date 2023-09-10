@@ -14,4 +14,5 @@ public class TweetDto {
     private String image;
     private LocalDateTime createdAt;
     private boolean isDeleted;
+    private TweetDto originalTweet;
 }

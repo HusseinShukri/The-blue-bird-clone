@@ -14,4 +14,6 @@ public interface ITweetRepository {
     List<TweetDto> getTweets(int userId);
 
     List<TweetDto> fetchFeedTweets();
+
+    void insertRetweet(Tweet tweet);
 }

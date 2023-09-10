@@ -1,37 +1,9 @@
-<script>
-    function updateCharacterCount() {
-        var maxLength = 500;
-        var currentLength = document.getElementById('post-content-element-textarea').value.length;
-        var charactersLeft = maxLength - currentLength;
-        document.getElementById('charactersLeft').innerText = charactersLeft;
-    };
-
-    function resizeTextarea() {
-        var textarea = document.getElementById('post-content-element-textarea');
-        textarea.style.height = "auto";
-        textarea.style.height = (textarea.scrollHeight) + "px";
-    };
-
-</script>
-<style>
-    .post-content-element-textarea {
-        width: 100%;
-        box-sizing: border-box;
-        resize: vertical;
-        overflow: hidden;
-    }
-
-    .charactersCount {
-        color: rgb(0, 0, 0, 0.5);
-    }
-</style>
 <div class="post-container post px-3">
-    <div class="post-image-content">
-        <div class="post-image border image">{{ user.image }}</div>
         <div class="post-content-element">
             <form action="/twitter-clone/tweet/new-tweet" method="POST">
                 <div class="post-content-element post-content-text fn-15">
-                    <textarea id="post-content-element-textarea" name="tweetContent"
+                    <textarea id="post-content-element-textarea"
+                              name="retweetContent"
                               class="post-content-element-textarea"
                               placeholder="What is happening?!"
                               rows="3" maxlength="500"
@@ -39,6 +11,7 @@
                     <div class="fn-bold-15">
                         <span id="charactersLeft" class="charactersCount">500</span>
                     </div>
+                    {{ tweet.content }}
                 </div>
                 <div class="post-content-element post-content-name fn-bold-15 mb-3">
                     <div class="new-post-content-options container p-2">
@@ -46,12 +19,14 @@
                             <div class="new-post-content-options-left col-auto d-flex">
                             </div>
                             <div class="new-post-content-options-right col-auto ms-auto d-flex">
-                                <button type="submit"
+                                <button
+                                        id="hide-retweet-dialog"
+                                        type="submit"
                                         class="new-post-content-options-right-post fn-bold-20"
                                         hx-trigger="click"
                                         hx-target="#middle-side-tweet-timeline"
                                         hx-swap="innerHTML"
-                                        hx-post="/twitter-clone/tweet/new-tweet">POST
+                                        hx-post="/twitter-clone/tweet/retweet/{{ tweet.id }}">POST
                                 </button>
                             </div>
                         </div>
@@ -59,5 +34,4 @@
                 </div>
             </form>
         </div>
-    </div>
 </div>

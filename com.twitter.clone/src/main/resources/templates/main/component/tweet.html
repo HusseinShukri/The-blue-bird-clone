@@ -1,25 +1,55 @@
+<script type="text/JavaScript">
+    (function () {
+        var dialog = document.getElementById('retweet-dialog');
+        document.getElementById('show-retweet-dialog').onclick = function () {
+            dialog.show();
+        };
+        document.getElementById('hide-retweet-dialog').onclick = function () {
+            dialog.close();
+        };
+    })();
+</script>
 <div class="post-container px-3">
     <div class="post-image-content">
         <div class="post-image border image">{{ tweet.image }}</div>
         <div class="post-content-element">
             <div class=" post-content-element post-content-name fn-bold-15">
                 <div href="/twitter-clone/newsfeed/tweet-timeline/"
-                        hx-get="/twitter-clone/newsfeed/tweet-timeline/{{ tweet.userId }}"
-                        hx-target="#middle-side-tweet-timeline"
-                        hx-trigger="click"
-                        hx-swap="innerHTML">
+                     hx-get="/twitter-clone/newsfeed/tweet-timeline/{{ tweet.userId }}"
+                     hx-target="#middle-side-tweet-timeline"
+                     hx-trigger="click"
+                     hx-swap="innerHTML">
                     <div> {{ tweet.username }}</div>
                 </div>
             </div>
             <div class=" post-content-element post-content-text fn-15 ">
-                {% if tweet.originalTweet %}
-                <div>{{ tweet.content }}</div>
-                </br>
-                <div> {{ tweet.originalTweet.content }}</div>
+                {% if tweet.originalTweet is not null %}
+                    {{ tweet.content }}
+                    {% include "templates/main/component/retweet.html" %}
                 {% else%}
                     {{ tweet.content }}
                 {% endif %}
             </div>
+            <div class="new-post-content-options container p-2">
+                <div class="row">
+                    <div class="new-post-content-options-left col-auto d-flex">
+                    </div>
+                    <div class="new-post-content-options-right col-auto ms-auto d-flex">
+                        <dialog id="retweet-dialog">
+                            {% include "templates/main/component/post-retweet.html"%}
+                        </dialog>
+                        <button
+                                id="show-retweet-dialog"
+                                type="button"
+                                class="btn  btn-primary"
+                                data-toggle="modal"
+                                data-target="#retweetModal">Retweet
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+

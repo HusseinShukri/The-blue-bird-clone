@@ -1,6 +1,7 @@
 package com.twitter.clone.tweet.domain.service;
 
 import com.google.inject.Inject;
+import com.twitter.clone.tweet.api.dto.NewRetweetDto;
 import com.twitter.clone.tweet.api.dto.NewTweetDto;
 import com.twitter.clone.tweet.api.dto.TweetDto;
 import com.twitter.clone.tweet.api.mapper.TweetMapper;
@@ -39,5 +40,11 @@ public class TweetService implements ITweetService {
     public List<TweetDto> fetchFeedTweets() {
         var tweets = tweetRepository.fetchFeedTweets();
         return mapper.domainTweetDtoToTweetDtoList(tweets);
+    }
+
+    @Override
+    public void insertRetweet(NewRetweetDto newRetweet) {
+        var tweet = mapper.NewRetweetDtoToTweet(newRetweet);
+        tweetRepository.insertRetweet(tweet);
     }
 }

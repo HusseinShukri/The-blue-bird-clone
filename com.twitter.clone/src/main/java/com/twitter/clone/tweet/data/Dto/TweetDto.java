@@ -2,6 +2,7 @@ package com.twitter.clone.tweet.data.Dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jdbi.v3.core.mapper.Nested;
 
 import java.time.LocalDateTime;
 
@@ -15,4 +16,6 @@ public class TweetDto {
     private String image;
     private LocalDateTime createdAt;
     private boolean isDeleted;
+    @Nested
+    private TweetDto originalTweet;
 }

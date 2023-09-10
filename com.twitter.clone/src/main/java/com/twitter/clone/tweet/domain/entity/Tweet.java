@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Tweet {
     private Integer id;
+    private Integer originalTweetId;
     private Integer userId;
     private String content;
     private LocalDateTime createdAt;

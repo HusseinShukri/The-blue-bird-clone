@@ -1,5 +1,6 @@
 package com.twitter.clone.tweet.api.services;
 
+import com.twitter.clone.tweet.api.dto.NewRetweetDto;
 import com.twitter.clone.tweet.api.dto.NewTweetDto;
 import com.twitter.clone.tweet.api.dto.TweetDto;
 
@@ -14,4 +15,6 @@ public interface ITweetService {
     List<TweetDto> getTweets(int userId);
 
     List<TweetDto>  fetchFeedTweets();
+
+    void insertRetweet(NewRetweetDto newRetweet);
 }

@@ -33,4 +33,9 @@ public class TweetRepository implements ITweetRepository {
     public List<TweetDto> fetchFeedTweets() {
         return tweetDao.fetchFeedTweets();
     }
+
+    @Override
+    public void insertRetweet(Tweet tweet) {
+        tweetDao.insertRetweet(tweet.getUserId(),tweet.getContent(),tweet.getOriginalTweetId());
+    }
 }

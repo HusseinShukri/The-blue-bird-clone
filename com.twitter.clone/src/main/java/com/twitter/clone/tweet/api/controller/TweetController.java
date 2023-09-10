@@ -19,10 +19,10 @@ public class TweetController {
     private final TweetService tweetService;
     private final TweetMapper mapper;
 
-    @Http.Get("{id}")
+    @Http.Get("{tweetId}")
     public void getTweet(Context context) {
-        var id = Integer.parseInt(context.pathParam("id"));
-        var projectDto = tweetService.get(id);
+        var tweetId = Integer.parseInt(context.pathParam("tweetId"));
+        var projectDto = tweetService.get(tweetId);
         if (projectDto == null) {
             context.status(HttpStatus.NOT_FOUND);
         } else {
@@ -45,5 +45,19 @@ public class TweetController {
         //TODO separate the post response from page render and handel this case in better way
         context.status(HttpStatus.SEE_OTHER);
         context.header("hx-redirect", "/twitter-clone/newsfeed/index");
+    }
+
+    @Http.Post("retweet/{tweetId}")
+    public void retweet(Context context) throws UnauthorizedException {
+
+        var newRetweet = mapper.contextToNewRetweetDto(context);
+
+        var user = userService.findUser(newRetweet.userId());
+
+        tweetService.insertRetweet(newRetweet);
+        //TODO we need to return a proper response
+        context.status(HttpStatus.SEE_OTHER);
+        context.header("hx-redirect", "/twitter-clone/newsfeed/index");
+
     }
 }
