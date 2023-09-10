@@ -3,10 +3,22 @@
         <div class="post-image border image">{{ tweet.image }}</div>
         <div class="post-content-element">
             <div class=" post-content-element post-content-name fn-bold-15">
-                {{ tweet.username }}
+                <div href="/twitter-clone/newsfeed/tweet-timeline/"
+                        hx-get="/twitter-clone/newsfeed/tweet-timeline/{{ tweet.userId }}"
+                        hx-target="#middle-side-tweet-timeline"
+                        hx-trigger="click"
+                        hx-swap="innerHTML">
+                    <div> {{ tweet.username }}</div>
+                </div>
             </div>
             <div class=" post-content-element post-content-text fn-15 ">
-                {{ tweet.content }}
+                {% if tweet.originalTweet %}
+                <div>{{ tweet.content }}</div>
+                </br>
+                <div> {{ tweet.originalTweet.content }}</div>
+                {% else%}
+                    {{ tweet.content }}
+                {% endif %}
             </div>
         </div>
     </div>

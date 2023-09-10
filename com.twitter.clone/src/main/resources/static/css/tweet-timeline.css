@@ -35,6 +35,12 @@
 .post-content-name {
     max-height: 2rem;
     padding: 0.3rem;
+    display: inline-block;
+}
+
+.post-content-name:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .post-content-text {

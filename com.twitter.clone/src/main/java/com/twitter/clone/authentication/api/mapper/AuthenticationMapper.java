@@ -30,7 +30,7 @@ public class AuthenticationMapper {
         if (context == null) {
             throw new IllegalArgumentException("Context cannot be null");
         }
-
+        //TODO add a validation form to return to the user instead of message only
         String email = Optional.ofNullable(context.formParam("email"))
                 .orElseThrow(() -> new IllegalArgumentException("Email is required"));
         String username = Optional.ofNullable(context.formParam("username"))
