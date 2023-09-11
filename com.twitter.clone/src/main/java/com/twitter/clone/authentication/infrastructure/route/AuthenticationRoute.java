@@ -2,6 +2,7 @@ package com.twitter.clone.authentication.infrastructure.route;
 
 import com.google.inject.Inject;
 import com.twitter.clone.authentication.api.controller.AuthenticationController;
+import com.twitter.clone.authentication.api.controller.UserController;
 import com.twitter.clone.infrastructure.annotation.route.PackagePath;
 import com.twitter.clone.infrastructure.route.BaseRoute;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticationRoute extends BaseRoute {
 
     private final AuthenticationController authenticationController;
+    private final UserController userController;
 
     @Override
     protected void initializeControllerInstances() {
         super.controllerInstancesMap.put(AuthenticationController.class, authenticationController);
+        super.controllerInstancesMap.put(UserController.class, userController);
     }
 }

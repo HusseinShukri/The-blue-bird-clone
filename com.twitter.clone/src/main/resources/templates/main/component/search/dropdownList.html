@@ -1,0 +1,13 @@
+{% for user in users %}
+<li>
+    <div class="dropdown-item"
+         hx-trigger="click"
+         hx-target="#middle-side-tweet-timeline"
+         href="/twitter-clone/newsfeed/tweet-timeline/"
+         hx-get="/twitter-clone/newsfeed/tweet-timeline/{{ user.id }}"
+         hx-swap="innerHTML">
+        {{ user.username }}
+    </div>
+</li>
+{% endfor %}
+

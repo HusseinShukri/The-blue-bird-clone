@@ -1,0 +1,19 @@
+<div class="d-flex align-items-center border rounded-pill p-2" style="width: 300px; position: relative;">
+    <div class="dropdown">
+        <input type="text"
+               role="button"
+               name="searchInput"
+               placeholder="Search"
+               autocomplete="off"
+               id="searchInput"
+               class="form-control border-0 flex-grow-1 rounded-pill"
+               data-bs-toggle="dropdown"
+               aria-expanded="false"
+               hx-post="/twitter-clone/user/search"
+               hx-target="#users-menu"
+               hx-trigger="keyup delay:1s, changed"
+               hx-swap="innerHTML">
+        <ul id="users-menu" class="dropdown-menu">
+        </ul>
+    </div>
+</div>

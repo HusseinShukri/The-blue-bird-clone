@@ -1,6 +1,7 @@
 package com.twitter.clone.newsfeed.api.controller;
 
 import com.google.inject.Inject;
+import com.twitter.clone.authentication.api.dto.UserDto;
 import com.twitter.clone.authentication.api.servcie.IUserService;
 import com.twitter.clone.infrastructure.annotation.route.Http;
 import com.twitter.clone.infrastructure.annotation.route.RouteController;
@@ -9,6 +10,7 @@ import com.twitter.clone.tweet.api.services.ITweetService;
 import io.javalin.http.Context;
 import lombok.RequiredArgsConstructor;
 
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,7 +24,8 @@ public class NewsfeedController {
     @Http.Get("index")
     public void index(Context context) {
         var tweets = tweetService.fetchFeedTweets();
-        context.render("templates/main/index.html", Map.of("tweets", tweets));
+        var users = new LinkedList<UserDto>();
+        context.render("templates/main/index.html", Map.of("tweets", tweets,"users",users));
     }
 
     @Http.Get("tweet-timeline")

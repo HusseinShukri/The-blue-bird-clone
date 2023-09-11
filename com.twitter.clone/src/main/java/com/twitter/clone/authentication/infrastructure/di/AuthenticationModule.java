@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.twitter.clone.authentication.api.controller.AuthenticationController;
+import com.twitter.clone.authentication.api.controller.UserController;
 import com.twitter.clone.authentication.api.mapper.AuthenticationMapper;
 import com.twitter.clone.authentication.api.mapper.UserMapper;
 import com.twitter.clone.authentication.api.servcie.ICookieService;
@@ -28,6 +29,7 @@ public class AuthenticationModule extends AbstractModule {
         bind(AuthenticationController.class);
         bind(UserMapper.class);
         bind(AuthenticationMapper.class);
+        bind(UserController.class);
     }
 
     @Provides

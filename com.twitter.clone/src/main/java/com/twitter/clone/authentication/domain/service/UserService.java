@@ -11,6 +11,8 @@ import com.twitter.clone.authentication.domain.repository.IUserRepository;
 import com.twitter.clone.authentication.domain.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
 public class UserService implements IUserService {
 
@@ -46,5 +48,11 @@ public class UserService implements IUserService {
             throw new UserNotFoundException();
         }
         return mapper.userToUserDto(user);
+    }
+
+    @Override
+    public List<UserDto> search(String searchInput) {
+        var users = userRepository.search(searchInput);
+        return mapper.userToUserDtoList(users);
     }
 }

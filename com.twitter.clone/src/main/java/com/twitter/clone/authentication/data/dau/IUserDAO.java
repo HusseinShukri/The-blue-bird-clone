@@ -6,6 +6,8 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
+import java.util.List;
+
 public interface IUserDAO {
 
     @SqlQuery("""
@@ -79,4 +81,20 @@ public interface IUserDAO {
     """)
     @RegisterBeanMapper(User.class)
     User getUser(@Bind("id") int id);
+
+    @SqlQuery("""
+            SELECT
+            u.id,
+            u.username,
+            u.email,
+            u.password,
+            u.created_at as 'createdAt',
+            u.is_deleted as 'isDeleted'
+        FROM
+            User as u
+        WHERE
+            u.username like :searchInput
+    """)
+    @RegisterBeanMapper(User.class)
+    List<User> search(@Bind("searchInput") String searchInput);
 }

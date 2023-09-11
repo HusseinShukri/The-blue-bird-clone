@@ -36,23 +36,33 @@ public interface ITweetDAO {
     Tweet getTweetById(@Bind("id") long id);
 
     @SqlQuery("""
-                SELECT
-                    t.id,
-                    t.user_id,
-                    t.content,
-                    t.created_at,
-                    t.is_deleted,
-                    u.username
-                FROM
-                    Tweet as t
-                JOIN 
-                    User as u on u.id = t.user_id
-                WHERE 
-                    t.is_deleted = 0
-                   AND t.user_id = :userId
-                ORDER BY t.created_at DESC;
+              SELECT t.id,
+                   t.user_id,
+                   t.content,
+                   t.created_at,
+                   t.is_deleted,
+                   u.username,
+                   ot.id,
+                   ot.user_id,
+                   ot.content,
+                   ot.created_at,
+                   ot.is_deleted,
+                   ou.username
+            FROM 
+                Tweet AS t
+             JOIN
+                 User AS u ON u.id = t.user_id
+             LEFT JOIN
+                 Tweet AS ot ON t.original_tweet_id = ot.id AND ot.is_deleted = 0
+             LEFT JOIN
+                 User AS ou ON ou.id = ot.user_id
+            WHERE 
+                t.is_deleted = 0
+                AND t.user_id = :userId
+            ORDER BY 
+                t.created_at DESC;
             """)
-    @RegisterBeanMapper(TweetDto.class)
+    @RegisterRowMapper(TweetDtoMapper.class)
     List<TweetDto> getTweetsByUserId(@Bind("userId") int userId);
 
     @SqlQuery("""
@@ -68,15 +78,18 @@ public interface ITweetDAO {
                    ot.created_at,
                    ot.is_deleted,
                    ou.username
-            FROM Tweet AS t
-                     JOIN
+            FROM 
+                Tweet AS t
+             JOIN
                  User AS u ON u.id = t.user_id
-                     LEFT JOIN
+             LEFT JOIN
                  Tweet AS ot ON t.original_tweet_id = ot.id AND ot.is_deleted = 0
-                     LEFT JOIN
+             LEFT JOIN
                  User AS ou ON ou.id = ot.user_id
-            WHERE t.is_deleted = 0
-            ORDER BY t.created_at DESC;
+            WHERE 
+                t.is_deleted = 0
+            ORDER BY 
+                t.created_at DESC;
                 """)
     @RegisterRowMapper(TweetDtoMapper.class)
     List<TweetDto> fetchFeedTweets();

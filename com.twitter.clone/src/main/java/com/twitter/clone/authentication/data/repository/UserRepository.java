@@ -6,6 +6,8 @@ import com.twitter.clone.authentication.domain.entity.User;
 import com.twitter.clone.authentication.domain.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor(onConstructor = @__({@Inject}))
 public class UserRepository implements IUserRepository {
 
@@ -29,5 +31,10 @@ public class UserRepository implements IUserRepository {
     @Override
     public void createNewUser(String email, String userName, String password) {
         userDau.insert(email,userName,password);
+    }
+
+    @Override
+    public List<User> search(String searchInput) {
+        return userDau.search("%"+searchInput+"%");
     }
 }
