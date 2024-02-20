@@ -25,7 +25,7 @@ public class NewsfeedController {
     public void index(Context context) {
         var tweets = tweetService.fetchFeedTweets();
         var users = new LinkedList<UserDto>();
-        context.render("templates/main/index.html", Map.of("tweets", tweets,"users",users));
+        context.render("templates/main/index.html", Map.of("tweets", tweets, "users", users));
     }
 
     @Http.Get("tweet-timeline")
@@ -55,6 +55,6 @@ public class NewsfeedController {
         var user = userService.findUser(userId);
         var tweets = tweetService.getTweets(user.getId());
         //TODO we need to make a user profile page whenever a user views his own profile or others profile
-        context.render("templates/main/component/tweet-timeline.html", Map.of("tweets", tweets));
+        context.render("templates/main/component/profile/profile.html", Map.of("tweets", tweets, "user", user));
     }
 }

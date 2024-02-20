@@ -1,0 +1,12 @@
+<div class="container" style="min-height: 5rem">
+    <div class="row">
+        <div class="inline-flex flex-box col-auto ms-auto d-flex">
+            <img src="/img/abstract-user-flat.svg" class="image col-3 p-2">
+            <div class="name col-9 fs-1"> {{user.username}} </divclass>
+            </div>
+        </div>
+    </div>
+</div>
+{% for tweet in tweets %}
+{% include "templates/main/component/tweet.html" %}
+{% endfor %}

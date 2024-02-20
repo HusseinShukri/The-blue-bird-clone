@@ -24,10 +24,14 @@
             </div>
             <div class=" post-content-element post-content-text fn-15 ">
                 {% if tweet.originalTweet is not null %}
+                <div class="text-break">
                     {{ tweet.content }}
+                </div>
                     {% include "templates/main/component/retweet.html" %}
                 {% else%}
+                <div class="text-break">
                     {{ tweet.content }}
+                </div>
                 {% endif %}
             </div>
             <div class="new-post-content-options container p-2">
